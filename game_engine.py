@@ -27,12 +27,12 @@ class GameEngine:
     pass
 
   def criarComida(self):
-    posicaoX = random.randint( 1, self.tamanhoX )
-    posicaoY = random.randint( 1, self.tamanhoY )
+    posicaoX = random.randint( 1, self.tamanhoX ) -1
+    posicaoY = random.randint( 1, self.tamanhoY ) -1
     for pos in self.corpo:
       if pos[0] == posicaoX and pos[1] == posicaoY:
         return self.criarComida() # encontrar nova posição
-    return [ posicaoX-1 , posicaoY-1 ]
+    return [ posicaoX , posicaoY ]
 
   def iniciar(self, tamanhoCobra = 3):
     if tamanhoCobra < 3: tamanhoCobra = 3
@@ -47,7 +47,7 @@ class GameEngine:
 
     self.comida = self.criarComida()
 
-    inicial = [ 2 , tamanhoCobra + 2 ]
+    inicial = [ 2 , tamanhoCobra ]
     self.corpo.append( [ inicial[0] , inicial[1] ] )
     for i in range(1, tamanhoCobra):
       self.corpo.append( [ inicial[0] , inicial[1] - i ] )

@@ -37,6 +37,7 @@ while 1:
       if event.key == pygame.K_ESCAPE:
         sys.exit()
       if event.key == pygame.K_SPACE and event.mod & pygame.KMOD_LCTRL:
+        keras.backend.clear_session()
         jogo.novoJogo()
       # if event.key == pygame.K_SPACE:
       #   jogar()

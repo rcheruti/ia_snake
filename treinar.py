@@ -1,4 +1,5 @@
 
+import tensorflow
 import tensorflow.keras as keras
 from tensorflow.keras.layers import Dense, Input, Dropout
 from tensorflow.keras.models import Model, load_model
@@ -9,6 +10,9 @@ import numpy as np
 from game_engine import GameEngine
 import ia_engine
 from random import randint
+
+print('TensorFlow: ' + str(tensorflow.__version__))
+print('Keras: ' + str(keras.__version__))
 
 # --------------------------------------
 
@@ -33,10 +37,10 @@ else:
 print('')
 print('Iniciar treinamento')
 
-partidas = 100
+partidas = 70
 limite = 700
-aleatorio = partidas * ( 12 if comModeloTreinado else 8 )
-tamCobraInicial = 3
+aleatorio = partidas * ( 20 if comModeloTreinado else 8 )
+tamCobraInicial = 18
 game = GameEngine()
 
 recorde = 0
@@ -53,7 +57,7 @@ while par < partidas:
     entradas = ia_engine.criarEntradas( game )
     saidas = model.predict( entradas.reshape((1, 11)) )[0]
 
-    if randint(0, aleatorio) < (partidas - par):
+    if not comModeloTreinado and randint(0, aleatorio) < (partidas - par):
       resposta = to_categorical(randint(0, 2), 3)
     else:
       resposta = saidas
@@ -89,9 +93,11 @@ while par < partidas:
     # novo = ( premio + 0.00 * np.amax(saidasFuturo) )
     saidas[ np.argmax(saidas) ] += premio
 
-    model.fit( entradas.reshape((1, 11)), saidas.reshape((1, 3)), epochs=1, verbose=0 )
+    # model.fit( entradas.reshape((1, 11)), saidas.reshape((1, 3)), epochs=1, verbose=0 )
+    model.train_on_batch( entradas.reshape((1, 11)), saidas.reshape((1, 3)) )
     
   pass
+  keras.backend.clear_session()
   recorde = recorde if recorde > game.pontos else game.pontos
   print('Partida: %d, passo: %d, pontos: %d, Game terminado, recorde: %d' % (par, con, game.pontos, recorde))
 

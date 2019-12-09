@@ -28,7 +28,6 @@ verde2 = 44, 115, 52
 verm = 255, 108, 99
 
 escrever = pygame.font.Font('Roboto-Light.ttf', 20)
-escMenor = pygame.font.Font('Roboto-Light.ttf', 10)
 
 # -------------------------------
 
@@ -43,8 +42,8 @@ class Game:
     self.novoJogo()
     pass
 
-  def novoJogo(self):
-    self.game.iniciar(3)
+  def novoJogo(self, tamanhoCobra = 3):
+    self.game.iniciar( tamanhoCobra )
     self.width, self.height = self.game.tamanhoX * tamanhoPeca + tamanhoPeca * 2, self.game.tamanhoY * tamanhoPeca + tamanhoPeca * 2
     self.size = self.width, self.height + painelPontuacaoH
     self.proxDir = GameEngine.BAIXO

@@ -6,7 +6,9 @@ pygame.init()
 
 # --------------------------
 
+tamCobra = 18
 jogo = Game()
+jogo.novoJogo(tamCobra)
 
 while 1:
   for event in pygame.event.get():
@@ -15,7 +17,7 @@ while 1:
       if event.key == pygame.K_ESCAPE:
         sys.exit()
       if event.key == pygame.K_SPACE and event.mod & pygame.KMOD_LCTRL:
-        jogo.novoJogo()
+        jogo.novoJogo(tamCobra)
       # elif event.key == pygame.K_SPACE:
       #   game.moverCobra( proxDir )
 
