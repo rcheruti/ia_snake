@@ -20,7 +20,7 @@ def jogar():
   if jogo.game.terminado: return
 
   entradas = ia_engine.criarEntradas( jogo.game )
-  resposta = model.predict( entradas.reshape((1, 11)) )[0]
+  resposta = model.predict( entradas.reshape((1, 15)) )[0]
   novaDir = ia_engine.novaDirecao( resposta, jogo.game )
   jogo.proxDir = novaDir
 

@@ -66,8 +66,18 @@ class Game:
     return False
 
   def draw(self):
-    # pintar espacos da tela
+    # limpar a tela
     self.screen.fill(branco)
+
+    # pintar linhas dos quadros
+    self.screen.fill( (200,200,200), pygame.Rect( tamanhoPeca, (1+ self.game.tamanhoY / 2) * tamanhoPeca, self.game.tamanhoX * tamanhoPeca, 1 ) )
+    self.screen.fill( (200,200,200), pygame.Rect( (1+ self.game.tamanhoX / 2) * tamanhoPeca, tamanhoPeca, 1, self.game.tamanhoY * tamanhoPeca ) )
+    self.screen.blit( escrever.render('1',  True, (200,200,200)), (1* self.width /4, 1* self.height /4 ))
+    self.screen.blit( escrever.render('2',  True, (200,200,200)), (3* self.width /4, 1* self.height /4 ))
+    self.screen.blit( escrever.render('3',  True, (200,200,200)), (1* self.width /4, 3* self.height /4 ))
+    self.screen.blit( escrever.render('4',  True, (200,200,200)), (3* self.width /4, 3* self.height /4 ))
+
+    # pintar espacos da tela
     for i in range(0, self.game.tamanhoY + 2):
       self.screen.fill( marrom, pygame.Rect( 0, i * tamanhoPeca, tamanhoPeca, tamanhoPeca ) )
       self.screen.fill( marrom, pygame.Rect( self.width -tamanhoPeca, i * tamanhoPeca, tamanhoPeca, tamanhoPeca ) )
@@ -94,26 +104,31 @@ class Game:
       pass
 
     # escrever pontuação
-    textoPontuacao = escrever.render('Pontuação: %d' % (self.game.pontos), True, (0,0,0))
-    self.screen.blit(textoPontuacao, (20, self.height + 20))
+    textoPontuacao = escrever.render('Pontos: %d' % (self.game.pontos), True, (0,0,0))
+    self.screen.blit(textoPontuacao, (10, self.height + 20))
     
     # escrever entradas do treinamento para o estado atual
     entradas = ia_engine.criarEntradas( self.game )
     # direção da fruta
     txt = '%d%d%d%d' % ( entradas[0], entradas[1], entradas[2], entradas[3] )
-    self.screen.blit( escrever.render('^ > . <',  True, (160,160,160)), (200, self.height ))
-    self.screen.blit( escrever.render(txt, True, (200,40,40)), (200, self.height + 20))
-    self.screen.blit( escrever.render('fruta',  True, (200,200,200)), (200, self.height + 40 ))
+    self.screen.blit( escrever.render('^ > . <',  True, (160,160,160)), (110, self.height ))
+    self.screen.blit( escrever.render(txt, True, (200,40,40)), (110, self.height + 20))
+    self.screen.blit( escrever.render('fruta',  True, (200,200,200)), (110, self.height + 40 ))
     # direção da cobra
     txt = '%d%d%d%d' % ( entradas[4], entradas[5], entradas[6], entradas[7] )
-    self.screen.blit( escrever.render('^ > . <',  True, (160,160,160)), (280, self.height ))
-    self.screen.blit( escrever.render(txt, True, (20,140,20)), (280, self.height + 20))
-    self.screen.blit( escrever.render('cobra',  True, (200,200,200)), (280, self.height + 40 ))
+    self.screen.blit( escrever.render('^ > . <',  True, (160,160,160)), (180, self.height ))
+    self.screen.blit( escrever.render(txt, True, (20,140,20)), (180, self.height + 20))
+    self.screen.blit( escrever.render('cobra',  True, (200,200,200)), (180, self.height + 40 ))
     # perigo nas direções de decisão
     txt = '%d%d%d' % ( entradas[8], entradas[9], entradas[10] )
-    self.screen.blit( escrever.render('D F E',  True, (160,160,160)), (360, self.height ))
-    self.screen.blit( escrever.render(txt, True, (200,40,40)), (360, self.height + 20))
-    self.screen.blit( escrever.render('perigo',  True, (200,200,200)), (360, self.height + 40 ))
+    self.screen.blit( escrever.render('D F E',  True, (160,160,160)), (250, self.height ))
+    self.screen.blit( escrever.render(txt, True, (200,40,40)), (250, self.height + 20))
+    self.screen.blit( escrever.render('perigo',  True, (200,200,200)), (250, self.height + 40 ))
+    # espaços vazios
+    txt = '%3d %3d %3d %3d' % ( entradas[11]*100, entradas[12]*100, entradas[13]*100, entradas[14]*100 )
+    self.screen.blit( escrever.render('%3d %3d %3d %3d' % (1,2,3,4),  True, (160,160,160)), (320, self.height ))
+    self.screen.blit( escrever.render(txt, True, (200,40,40)), (320, self.height + 20))
+    self.screen.blit( escrever.render('espaços',  True, (200,200,200)), (320, self.height + 40 ))
     
     pygame.display.flip()
     pass
